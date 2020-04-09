@@ -29,3 +29,12 @@ app.listen(port, listening);
 function listening() {
   console.log(`Server is running on localhost:${port}`);
 }
+
+// POST route
+
+app.post("/addData", addData);
+
+function addData(request, response) {
+  projectData.push(request.body);
+  response.send(projectData);
+}
