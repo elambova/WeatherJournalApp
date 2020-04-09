@@ -14,3 +14,9 @@ const generate = document.getElementById("generate");
 const date = document.getElementById("date");
 const temp = document.getElementById("temp");
 const content = document.getElementById("content");
+
+// This function use new Date object to get current date
+function getDate() {
+  const date = new Date();
+  return date.toDateString();
+}
