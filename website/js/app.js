@@ -68,3 +68,17 @@ const updateUI = async () => {
     console.error(err);
   }
 };
+
+// Add event listener to button generate. When button is clicked callback function performAction will execute
+generate.addEventListener("click", performAction);
+
+// performAction function collect functions above starting from getData and wiht Promises (and key word then) add postData i updateUI.
+function performAction() {
+  getData(baseUrl, zip, apiKey).then(function (data) {
+    postData("/addData", {
+      date: getDate(),
+      temp: data,
+      content: feelings.value,
+    }).then(updateUI());
+  });
+}
