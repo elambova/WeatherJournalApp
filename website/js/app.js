@@ -20,3 +20,17 @@ function getDate() {
   const date = new Date();
   return date.toDateString();
 }
+
+// getData function using the keyword async and sets parameters baseUrl, zip and apiKey
+const getData = async (baseUrl, zip, apiKey) => {
+  const response = await fetch(baseUrl + zip.value + apiKey);
+  console.log(response);
+  try {
+    if (response.ok) {
+      const data = await response.json();
+      return data.main.temp;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
