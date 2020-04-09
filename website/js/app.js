@@ -34,3 +34,23 @@ const getData = async (baseUrl, zip, apiKey) => {
     console.error(error);
   }
 };
+
+// postData function using the keyword async and use method POST to post data which we will need later
+const postData = async (url = "", data = {}) => {
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  try {
+    const newData = await response.json();
+    console.log(newData);
+    return newData[newData.length - 1];
+  } catch (error) {
+    console.error(error);
+  }
+};
