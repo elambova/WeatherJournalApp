@@ -54,3 +54,17 @@ const postData = async (url = "", data = {}) => {
     console.error(error);
   }
 };
+
+// updateUI function using the keyword async and updates the data we have, and attach to selected elements
+const updateUI = async () => {
+  const req = await fetch("/all");
+  try {
+    const allData = await req.json();
+    console.log(allData);
+    date.innerHTML = allData[allData.length - 1].date;
+    temp.innerHTML = allData[allData.length - 1].temp;
+    content.innerHTML = feelings.value;
+  } catch (err) {
+    console.error(err);
+  }
+};
