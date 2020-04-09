@@ -38,3 +38,10 @@ function addData(request, response) {
   projectData.push(request.body);
   response.send(projectData);
 }
+
+// GET roure
+app.get("/all", allWeatherData);
+
+function allWeatherData(request, response) {
+  response.send(projectData);
+}
