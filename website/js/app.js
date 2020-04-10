@@ -2,7 +2,7 @@
 
 // Information for OpenWeather API
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&units=metric&APPID=d005e35a98f556ab1335c2956d43c455";
+const apiKey = "&units=metric&APPID=";
 
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
