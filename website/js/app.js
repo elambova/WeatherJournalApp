@@ -76,14 +76,29 @@ generate.addEventListener("click", performAction);
 
 // performAction function collect functions above starting from getData and wiht Promises (and key word then) add postData i updateUI.
 function performAction() {
-  getData(baseUrl, zip, apiKey).then(function (data) {
-    postData("/addData", {
-      date: getDate(),
-      temp: data,
-      content: feelings.value,
-    }).then(updateUI());
-  });
+  if (feelings.value.trim().length === 0) {
+    feelings.classList.add("error");
+    feelings.setAttribute("placeholder", "Please enter your feelings!!!");
+    return;
+  } else if (zip.value.trim().length === 0) {
+    zip.classList.add("error");
+    zip.setAttribute("placeholder", "Please enter zip code!!!");
+    return;
+  } else {
+    zip.removeAttribute("class");
+    feelings.removeAttribute("class");
+    getData(baseUrl, zip, apiKey).then(function (data) {
+      postData("/addData", {
+        date: getDate(),
+        temp: data.main.temp,
+        content: feelings.value,
+        city: data.name,
+      }).then(updateUI());
+    });
+    entryHolderTitle.style.display = "block";
+  }
 }
+
 function clearFields() {
   zip.value = "";
   feelings.value = "";
