@@ -5,21 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Journal App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div id="weatherApp">
+    <header id="header">
         <h1>This is Weather Journal App</h1>
+    </header>
+    <div id="weatherApp">
         <input id="zip" name="zip" placeholder="Enter zip code here">
-        <textarea id="feelings" placeholder="Enter your feelings" rows="9" cols="50"></textarea>
+        <textarea id="feelings" placeholder="Enter your feelings" rows="4" cols="50"></textarea>
         <button id="generate">Let's go!</button>
     </div>
 
+    <h2 id="entryHolderTitle">the zip code you entered is for: <b id="city"></b></h2>
     <div id="entryHolder">
         <div id="date"></div>
         <div id="temp"></div>
         <div id="content"></div>
+    </div>
+    <div id="listOfZipCode">
+        <h3>List of some zip code </h3>
+        <ol>
+            <li><span class="location">New York, NY, United States</span> - <span class="zipCode">10012</span></li>
+            <li><span class="location">Philadelphia, PA, United States</span> - <span class="zipCode">19153</span></li>
+            <li><span class="location">Seattle, WA, United States</span> - <span class="zipCode">98144</span></li>
+            <li><span class="location">Los Angeles, CA, United States</span> - <span class="zipCode">90013</span></li>
+            <li><span class="location">Washington, DC, United States</span> - <span class="zipCode">20032</span></li>
+            <li><span class="location">Carrer de Puigmartí, 7, Barcelona, Espanya</span> - <span
+                    class="zipCode">08012</span></li>
+            <li><span class="location">Via Raffaele Cadorna, 30, Roma RM, Italia</span> - <span
+                    class="zipCode">00187</span></li>
+            <li><span class="location">37 Avenue Pierre de Ronsard, Arcueil, France</span> - <span
+                    class="zipCode">94110</span></li>
+            <li><span class="location">Klášterská 779/1, Praha, Česká Republika</span> - <span
+                    class="zipCode">11000</span>
+            </li>
+        </ol>
     </div>
     <script src="js/app.js"></script>
 </body>
