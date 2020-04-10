@@ -2,10 +2,7 @@
 
 // Information for OpenWeather API
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&APPID=********";
-
-// Empty object to add current data
-const data = {};
+const apiKey = "&units=metric&APPID=d005e35a98f556ab1335c2956d43c455";
 
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
@@ -14,6 +11,11 @@ const generate = document.getElementById("generate");
 const date = document.getElementById("date");
 const temp = document.getElementById("temp");
 const content = document.getElementById("content");
+
+const errorId = document.getElementById("error");
+
+const entryHolderTitle = document.getElementById("entryHolderTitle");
+const city = document.getElementById("city");
 
 // This function use new Date object to get current date
 function getDate() {
