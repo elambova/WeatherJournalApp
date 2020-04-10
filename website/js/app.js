@@ -26,7 +26,6 @@ function getDate() {
 // getData function using the keyword async and sets parameters baseUrl, zip and apiKey
 const getData = async (baseUrl, zip, apiKey) => {
   const response = await fetch(baseUrl + zip.value + apiKey);
-  console.log(response);
   try {
     if (response.ok) {
       const data = await response.json();
@@ -62,13 +61,14 @@ const updateUI = async () => {
   const req = await fetch("/all");
   try {
     const allData = await req.json();
-    console.log(allData);
+    city.innerHTML = allData[allData.length - 1].city;
     date.innerHTML = allData[allData.length - 1].date;
-    temp.innerHTML = allData[allData.length - 1].temp;
+    temp.innerHTML = `${allData[allData.length - 1].temp} &#8451`;
     content.innerHTML = feelings.value;
   } catch (err) {
     console.error(err);
   }
+  clearFields();
 };
 
 // Add event listener to button generate. When button is clicked callback function performAction will execute
@@ -83,4 +83,8 @@ function performAction() {
       content: feelings.value,
     }).then(updateUI());
   });
+}
+function clearFields() {
+  zip.value = "";
+  feelings.value = "";
 }
