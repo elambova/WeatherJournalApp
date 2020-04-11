@@ -2,7 +2,7 @@
 
 // Information for OpenWeather API
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&units=metric&APPID=********";
+const apiKey = "&units=metric&APPID=****";
 
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
@@ -51,7 +51,6 @@ const postData = async (url = "", data = {}) => {
 
   try {
     const newData = await response.json();
-    console.log(newData[newData.length - 1]);
     return newData[newData.length - 1];
   } catch (error) {
     return error;
@@ -121,7 +120,9 @@ function fieldFocus() {
   entryHolderTitle.style.display = "none";
   entryHolder.style.display = "none";
   errorHolder.style.display = "none";
-  errorHolder.removeChild(errorHolder.firstElementChild);
+  if (errorHolder.hasChildNodes()) {
+    errorHolder.removeChild(errorHolder.firstElementChild);
+  }
 }
 
 function errorParagraph() {
