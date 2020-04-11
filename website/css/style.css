@@ -32,6 +32,13 @@ body {
   color: black;
 }
 
+#errorHolder {
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
+  display: none;
+}
+
 #zip,
 #feelings,
 #generate {
@@ -102,6 +109,7 @@ body {
     width: 70%;
   }
   #entryHolderTitle,
+  #errorHolder,
   #entryHolder,
   #listOfZipCode {
     width: 50%;
