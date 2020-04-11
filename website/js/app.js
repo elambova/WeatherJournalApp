@@ -2,7 +2,7 @@
 
 // Information for OpenWeather API
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&units=metric&APPID=";
+const apiKey = "&units=metric&APPID=********";
 
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
@@ -12,10 +12,12 @@ const date = document.getElementById("date");
 const temp = document.getElementById("temp");
 const content = document.getElementById("content");
 
-const errorId = document.getElementById("error");
+const errorHolder = document.getElementById("errorHolder");
 
 const entryHolderTitle = document.getElementById("entryHolderTitle");
 const city = document.getElementById("city");
+
+const entryHolder = document.getElementById("entryHolder");
 
 // This function use new Date object to get current date
 function getDate() {
@@ -29,10 +31,10 @@ const getData = async (baseUrl, zip, apiKey) => {
   try {
     if (response.ok) {
       const data = await response.json();
-      return data.main.temp;
+      return data;
     }
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };
 
@@ -49,10 +51,10 @@ const postData = async (url = "", data = {}) => {
 
   try {
     const newData = await response.json();
-    console.log(newData);
+    console.log(newData[newData.length - 1]);
     return newData[newData.length - 1];
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };
 
@@ -65,10 +67,12 @@ const updateUI = async () => {
     date.innerHTML = allData[allData.length - 1].date;
     temp.innerHTML = `${allData[allData.length - 1].temp} &#8451`;
     content.innerHTML = feelings.value;
+
+    // reset feelings value (clear field)
+    feelings.value = "";
   } catch (err) {
-    console.error(err);
+    return error;
   }
-  clearFields();
 };
 
 // Add event listener to button generate. When button is clicked callback function performAction will execute
@@ -88,18 +92,47 @@ function performAction() {
     zip.removeAttribute("class");
     feelings.removeAttribute("class");
     getData(baseUrl, zip, apiKey).then(function (data) {
-      postData("/addData", {
-        date: getDate(),
-        temp: data.main.temp,
-        content: feelings.value,
-        city: data.name,
-      }).then(updateUI());
+      if (data === undefined) {
+        errorParagraph();
+      } else {
+        errorHolder.style.display = "none";
+
+        postData("/addData", {
+          date: getDate(),
+          temp: data.main.temp,
+          content: feelings.value,
+          city: data.name,
+        }).then(updateUI());
+
+        // display returned data
+        entryHolderTitle.style.display = "block";
+        entryHolder.style.display = "block";
+        // reset zip code value (clear field)
+        zip.value = "";
+      }
     });
-    entryHolderTitle.style.display = "block";
   }
 }
+zip.addEventListener("focus", fieldFocus);
 
-function clearFields() {
+function fieldFocus() {
   zip.value = "";
   feelings.value = "";
+  entryHolderTitle.style.display = "none";
+  entryHolder.style.display = "none";
+  errorHolder.style.display = "none";
+  errorHolder.removeChild(errorHolder.firstElementChild);
+}
+
+function errorParagraph() {
+  // if there is an error it is displayed
+  if (!errorHolder.hasChildNodes()) {
+    const p = document.createElement("p");
+    p.textContent = "Invalid zip code!";
+    p.setAttribute("class", "error");
+    errorHolder.style.display = "block";
+    errorHolder.appendChild(p);
+  }
+  entryHolder.style.display = "none";
+  entryHolderTitle.style.display = "none";
 }
