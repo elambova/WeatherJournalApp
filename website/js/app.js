@@ -2,7 +2,7 @@
 
 // Information for OpenWeather API
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&units=metric&APPID=****";
+const apiKey = "&units=metric&APPID=d005e35a98f556ab1335c2956d43c455";
 
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
@@ -64,7 +64,7 @@ const updateUI = async () => {
     const allData = await req.json();
     city.innerHTML = allData[allData.length - 1].city;
     date.innerHTML = allData[allData.length - 1].date;
-    temp.innerHTML = `${allData[allData.length - 1].temp} &#8451`;
+    temp.innerHTML = `${allData[allData.length - 1].temp.toFixed(1)}&#8451`;
     content.innerHTML = feelings.value;
 
     // reset feelings value (clear field)
