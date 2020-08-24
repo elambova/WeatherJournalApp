@@ -1,9 +1,5 @@
 "use strict";
 
-// Information for OpenWeather API
-const baseUrl = "https://api.openweathermap.org/data/2.5/weather?zip=";
-const apiKey = "&units=metric&APPID=d005e35a98f556ab1335c2956d43c455";
-
 // Select all need elemnt from page
 const zip = document.getElementById("zip");
 const feelings = document.getElementById("feelings");
@@ -11,6 +7,14 @@ const generate = document.getElementById("generate");
 const date = document.getElementById("date");
 const temp = document.getElementById("temp");
 const content = document.getElementById("content");
+
+// Generate a unique token for storing your bookshelf data on the backend server.
+let token = Math.random().toString(36).substr(-8);
+
+const headers = {
+  Accept: "application/json",
+  Authorization: token,
+};
 
 const errorHolder = document.getElementById("errorHolder");
 
@@ -26,17 +30,10 @@ function getDate() {
 }
 
 // getData function using the keyword async and sets parameters baseUrl, zip and apiKey
-const getData = async (baseUrl, zip, apiKey) => {
-  const response = await fetch(baseUrl + zip.value + apiKey);
-  try {
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
-  } catch (error) {
-    return error;
-  }
-};
+const getData = async (zip) =>
+  await fetch(`http://localhost:8000/data?zip=${zip}`, headers)
+    .then((res) => res.json())
+    .then((data) => data);
 
 // postData function using the keyword async and use method POST to post data which we will need later
 const postData = async (url = "", data = {}) => {
@@ -90,7 +87,7 @@ function performAction() {
   } else {
     zip.removeAttribute("class");
     feelings.removeAttribute("class");
-    getData(baseUrl, zip, apiKey).then(function (data) {
+    getData(zip.value).then(function (data) {
       if (data === undefined) {
         errorParagraph();
       } else {
