@@ -1,3 +1,7 @@
+var path = require("path");
+const dotenv = require("dotenv");
+dotenv.config();
+
 /* Empty JS object to act as endpoint for all routes */
 projectData = [];
 
@@ -29,6 +33,38 @@ app.listen(port, listening);
 function listening() {
   console.log(`Server is running on localhost:${port}`);
 }
+
+const fetch = require("node-fetch");
+
+// Keys for access to APIs
+const key = {
+  apiKey: process.env.API_KEY,
+};
+
+// getData function using the keyword async and sets parameters baseUrl, zip and apiKey
+const getData = async (zip) => {
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&units=metric&APPID=d005e35a98f556ab1335c2956d43c455`
+  );
+  try {
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
+// Get Route
+app.get("/data", async (req, res, next) => {
+  try {
+    const data = await getData(req.query.zip);
+    res.send(data);
+  } catch (err) {
+    throw new Error(err);
+  }
+});
 
 // POST route
 
